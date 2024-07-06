@@ -34,6 +34,8 @@ def encode(bytes: bytes):
         for bit in bin(byte)[2:]:
             payload.append(sine_wave(audp.bit_to_hz(int(bit)), audp.BIT_DURATION))
 
+        payload.append(sine_wave(audp.BIT_CHUNK_END, audp.BIT_DURATION))
+
     return np.concatenate(payload)
 
 
@@ -56,6 +58,9 @@ def extract_frequency(wave_segment, sample_rate):
 
 def decode(analog_signal: np.ndarray):
     return [extract_frequency(segment, audp.SAMPLE_RATE) for segment in extract_analog_signal(analog_signal)]
+
+
+
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ BIT_DURATION = 0.08
 
 BIT_HIGH = 1600
 BIT_LOW = 800
-BIT_CHUNK_END = 200
+BIT_CHUNK_END = 400
 
 TOLERANCE = 50
 
@@ -30,7 +30,7 @@ def hz_to_bit(hz: float64) -> Literal[0, 1, 2, -1]:
         return -1
     
 
-def analog_to_bytes(frequencies: List[float]) -> List[List[int]]:
+def analog_to_bits(frequencies: List[float]) -> List[List[int]]:
     bits = []
     bytes_array = []
 
@@ -49,6 +49,12 @@ def analog_to_bytes(frequencies: List[float]) -> List[List[int]]:
         bytes_array.append(bits)
     
     return bytes_array
+
+
+def analog_to_bytes(frequencies: List[float]) -> bytes:
+    data = analog_to_bits(frequencies)
+    bytes_array = [bytes([int(''.join(map(str, bits)), 2)]) for bits in data]
+    return b''.join(bytes_array)
 
 
 class SampleRateMismatch(Exception):

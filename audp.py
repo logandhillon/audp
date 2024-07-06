@@ -6,16 +6,15 @@ Copyright (c) 2024 Logan Dhillon
 from numpy import float64
 from typing import List, Literal
 
-BIT_DURATION = 0.08
+BIT_DURATION = 0.01
 
-BIT_HIGH = 1600
+BIT_HIGH = 1200
 BIT_LOW = 800
 BIT_CHUNK_END = 400
-
 TOLERANCE = 50
 
 SAMPLE_RATE = 44100
-WAVE_LENGTH = 3528
+WAVE_LENGTH = int(SAMPLE_RATE * BIT_DURATION)
 
 bit_to_hz = lambda bit: BIT_HIGH if bit == 1 else BIT_LOW
 

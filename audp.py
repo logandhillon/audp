@@ -6,12 +6,16 @@ Copyright (c) 2024 Logan Dhillon
 from numpy import float64
 from typing import List, Literal
 
-BIT_DURATION = 0.01
+BIT_DURATION = 0.2
 
+# FOR PCM-BASED MODEMS
 BIT_HIGH = 1200
 BIT_LOW = 800
 BIT_CHUNK_END = 400
-TOLERANCE = 50
+TOLERANCE = 100
+
+# FOR DAC-BASED MODEMS
+DAC_FACTOR = 70
 
 SAMPLE_RATE = 44100
 WAVE_LENGTH = int(SAMPLE_RATE * BIT_DURATION)
@@ -29,7 +33,7 @@ def hz_to_bit(hz: float64) -> Literal[0, 1, 2, -1]:
         return -1
     
 
-def analog_to_bits(frequencies: List[float]) -> List[List[int]]:
+def pcm_to_bits(frequencies: List[float]) -> List[List[int]]:
     bits = []
     bytes_array = []
 
@@ -50,9 +54,18 @@ def analog_to_bits(frequencies: List[float]) -> List[List[int]]:
     return bytes_array
 
 
-def analog_to_bytes(frequencies: List[float]) -> bytes:
-    data = analog_to_bits(frequencies)
+def pcm_to_bytes(frequencies: List[float]) -> bytes:
+    data = pcm_to_bits(frequencies)
     bytes_array = [bytes([int(''.join(map(str, bits)), 2)]) for bits in data]
+    return b''.join(bytes_array)
+
+
+def dac_to_bytes(frequencies: List[float]) -> bytes:
+    bytes_array = []
+
+    for freq in frequencies:
+        bytes_array.append(round(freq / DAC_FACTOR).to_bytes())
+    
     return b''.join(bytes_array)
 
 

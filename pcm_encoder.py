@@ -16,7 +16,7 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 
 
-FILE_NAME = "out/audp_packet.wav"
+FILE_NAME = "out/pcm-audp_packet.wav"
 
 
 def sine_wave(hz: float, duration: float):
@@ -79,4 +79,4 @@ if __name__ == "__main__":
         raise audp.SampleRateMismatch(sample_rate)
 
     frequencies = decode(data)
-    print("Attempted to decode, got this:", audp.analog_to_bytes(frequencies))
+    print("Attempted to decode, got this:", audp.pcm_to_bytes(frequencies))

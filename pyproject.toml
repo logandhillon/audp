@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "audp"
+version = "0.9"
+authors = [
+  { name="Logan Dhillon", email="logandhi64@gmail.com" },
+]
+description = "Analog Unicast Data Protocol (AUDP)"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/logandhillon/audp"
+Issues = "https://github.com/logandhillon/audp/issues"

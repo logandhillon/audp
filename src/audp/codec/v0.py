@@ -1,6 +1,6 @@
 """
-AUDP Encoder-Decoder, first version
-Encodes via PCM, see the AUDP spec for specifics
+Resilient AUDP Encoder-Decoder, version 0 beta release
+Encodes via AUDP/0.9, see the AUDP spec for specifics
 Copyright (c) 2024 Logan Dhillon
 """
 
@@ -9,12 +9,20 @@ from . import sine_wave, get_frequencies, read_wav_file, write_wav_file
 import audp
 from typing import List
 
+BIT_HIGH = 6000
+BIT_LOW = 4000
+BIT_CHUNK_END = 2000
+TOLERANCE = 975
 
-low_min, low_max = audp.BIT_LOW - audp.TOLERANCE, audp.BIT_LOW + audp.TOLERANCE
-high_min, high_max = audp.BIT_HIGH - \
-    audp.TOLERANCE, audp.BIT_HIGH + audp.TOLERANCE
-end_min, end_max = audp.BIT_CHUNK_END - \
-    audp.TOLERANCE, audp.BIT_CHUNK_END + audp.TOLERANCE
+
+def bit_to_hz(bit): return BIT_HIGH if bit == 1 else BIT_LOW
+
+
+low_min, low_max = BIT_LOW - TOLERANCE, BIT_LOW + TOLERANCE
+high_min, high_max = BIT_HIGH - \
+    TOLERANCE, BIT_HIGH + TOLERANCE
+end_min, end_max = BIT_CHUNK_END - \
+    TOLERANCE, BIT_CHUNK_END + TOLERANCE
 
 
 def digitize_frequency(hz: np.float64) -> int:
@@ -56,9 +64,9 @@ def encode(bytes: bytes):
     for byte in bytes:
         for bit in bin(byte)[2:]:
             payload.append(
-                sine_wave(audp.bit_to_hz(int(bit)), audp.BIT_DURATION))
+                sine_wave(bit_to_hz(int(bit)), audp.BIT_DURATION))
 
-        payload.append(sine_wave(audp.BIT_CHUNK_END, audp.BIT_DURATION))
+        payload.append(sine_wave(BIT_CHUNK_END, audp.BIT_DURATION))
 
     return np.int16(np.concatenate(payload) * 32767)    # 16-bit PCM format
 
@@ -76,7 +84,7 @@ if __name__ == "__main__":
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    FILE_NAME = "out/pcm-audp_packet.wav"
+    FILE_NAME = "out/audp_packet.wav"
 
     print(f"\n== ENCODING ({FILE_NAME}) ==")
     write_wav_file(FILE_NAME, encode(b'Hello, world!'))

@@ -22,7 +22,6 @@ def digitize_signal(frequencies: List[float]) -> bytes:
 
 
 def encode(bytes: bytes):
-    print(f'Encoding {bytes}')
     payload = []
 
     for byte in bytes:

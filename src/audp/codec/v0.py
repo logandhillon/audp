@@ -58,7 +58,6 @@ def digitize_frequencies(frequencies: List[float]) -> List[List[int]]:
 
 
 def encode(bytes: bytes):
-    print(f'Encoding {bytes}')
     payload = []
 
     for byte in bytes:

@@ -1,6 +1,18 @@
-from audp import transmitter, receiver
 from threading import Thread
+from audp.packet import Packet
+from audp.communicator import LocalCommunicator
+
+
+def rx():
+    while True:
+        print("incoming:", LocalCommunicator.recv())
+
+
+def tx():
+    while True:
+        LocalCommunicator.send(Packet(b'?', input("> ").encode('ascii')))
+
 
 if __name__ == "__main__":
-    Thread(target=receiver.rx_loop, name="devRx").start()
-    Thread(target=transmitter.tx_stdin_loop, name="devTx").start()
+    Thread(target=rx, name="commRx").start()
+    Thread(target=tx, name="commTx").start()

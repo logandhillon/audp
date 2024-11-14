@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "audp"
-version = "0.9"
+version = "1.0-rc.1"
 authors = [{ name = "Logan Dhillon", email = "logandhi64@gmail.com" }]
 description = "Analog Unicast Data Protocol (AUDP)"
 readme = "README.md"

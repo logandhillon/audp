@@ -1,5 +1,5 @@
 """
-Resilient AUDP Encoder-Decoder, version 0 beta release
+Resilient legacy AUDP modem, version 0 (prototype)
 Encodes via AUDP/0.9, see the AUDP spec for specifics
 Copyright (c) 2024 Logan Dhillon
 """

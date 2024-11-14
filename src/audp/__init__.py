@@ -5,7 +5,7 @@ Copyright (c) 2024 Logan Dhillon
 
 BIT_DURATION = 0.02
 SAMPLE_RATE = 44100
-WAVE_LENGTH = int(SAMPLE_RATE * BIT_DURATION)
+WAVE_LENGTH = int(SAMPLE_RATE*BIT_DURATION)
 
 
 class SampleRateMismatch(Exception):

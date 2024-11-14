@@ -21,6 +21,7 @@ def digitize_signal(frequencies: List[float]) -> bytes:
         if hz < CTRL_CUTOFF:
             continue
 
+
         if hz >= CTRL_OFFSET:
             hz -= CTRL_OFFSET
 
